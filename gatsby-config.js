@@ -134,6 +134,7 @@ module.exports = {
       resolve: `gatsby-plugin-s3`,
       options: {
         bucketName: "rfaircloth-com",
+        region: process.env.AWS_DEFAULT_REGION,
       },
     },
   ],
