@@ -1,3 +1,5 @@
+const siteAddress = new URL("https://www.example.com")
+
 module.exports = {
   siteMetadata: {
     title: `RFaircloth Data Nerd`,
@@ -6,7 +8,7 @@ module.exports = {
       summary: `who lives and works in remote from Sunny Florida trying to share useful things.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://rfaircloth.com/`,
+    siteUrl: siteAddress.href.slice(0, -1),
     social: {
       github: `rfaircloth-splunk`,
       linkedin: `ryanfaircloth`,
@@ -24,6 +26,10 @@ module.exports = {
           //"DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
         ],
         head: true,
+        gtagConfig: {
+          cookie_expires: 0,
+          send_page_view: true, // default appears to be false.
+        },
       },
     },
     `gatsby-plugin-image`,
@@ -144,11 +150,22 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
     {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: siteAddress.href.slice(0, -1),
+      },
+    },
+    {
       resolve: `gatsby-plugin-s3`,
       options: {
         bucketName: "rfaircloth-com",
         region: process.env.AWS_DEFAULT_REGION,
+        protocol: siteAddress.protocol.slice(0, -1),
+        hostname: siteAddress.hostname,
+        acl: null,
+        generateRedirectObjectsForPermanentRedirects: true,
       },
     },
+    `gatsby-plugin-meta-redirect`,
   ],
 }
