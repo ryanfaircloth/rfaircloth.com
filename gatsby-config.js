@@ -5,9 +5,9 @@ module.exports = {
     title: `RFaircloth Data Nerd`,
     author: {
       name: `Ryan Faircloth`,
-      summary: `who lives and works in remote from Sunny Florida trying to share useful things.`,
+      summary: `who lives and works remotely from Sunny Florida trying to share useful things.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `My Blog about big data problems`,
     siteUrl: siteAddress.href.slice(0, -1),
     social: {
       github: `rfaircloth-splunk`,
