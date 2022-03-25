@@ -18,11 +18,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
-      - run: echo "test">test.txt
-      - run: aws s3 cp test.txt s3://rfaircloth-com
-      - run: aws s3 ls rfaircloth-com
-
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
@@ -30,3 +25,4 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run deploy
+      - run: aws create-invalidation --distribution-id E290A7U35T5BSI
