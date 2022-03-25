@@ -1,31 +1,30 @@
 ---
-title: 'Building Reliable Syslog infrastructure on Centos 7 for Splunk'
-date: '2016-01-17T19:47:49-05:00'
+title: "Building Reliable Syslog infrastructure on Centos 7 for Splunk"
+date: "2016-01-17T19:47:49-05:00"
 status: publish
 permalink: /2016/01/17/building-reliable-syslog-infrastructure-on-centos-7
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 346
 category:
-    - Security
-    - Splunk
+  - Security
+  - Splunk
 tag:
-    - kemp
-    - 'load balancer'
-    - nlb
-    - Splunk
-    - syslog
-    - syslog-ng
+  - kemp
+  - "load balancer"
+  - nlb
+  - Splunk
+  - syslog
+  - syslog-ng
 post_format: []
 ---
-Overview
---------
+
+## Overview
 
 Preparation of a base infrastructure for high availability ingestion of syslog data with a default virtual server and configuration for test data on boarding. Reference technology specific on boarding procedures.
 
-Requirement
------------
+## Requirement
 
 Multiple critical log sources require a reliable syslog infrastructure. The following attributes must be present for the solution
 
@@ -33,8 +32,7 @@ Multiple critical log sources require a reliable syslog infrastructure. The foll
 - Syslog configuration which will not impact the logging of the host on which syslog is configured
 - External Load Balancing utilizing DNAT lacking available enterprise shared services NLB devices KEMP offers a free to use version of their product up to 20 Mbs suitable for many cases
 
-Technical Environment
----------------------
+## Technical Environment
 
 The following systems will be created utilizing physical or virtual systems. System specifications will vary due estimated load.
 
@@ -48,16 +46,15 @@ The following systems will be created utilizing physical or virtual systems. Sys
 - Subnet with at minimum the number of unique syslog sources (technologies) additional space for growth is strongly advised
 - Subnet allocated for syslog servers
 
-Solution Prepare the syslog-ng servers
---------------------------------------
+## Solution Prepare the syslog-ng servers
 
 The following procedure will be utilized to prepare the syslog-ng servers
 
 1. Install the base operating system and harden according to enterprise standards
 2. Provision and mount the application partitions /opt/splunk and /var/splunk-syslog according the estimates required for your environment.
-1. Note 1 typical configuration utilize noatime on both mounts
-2. Note 2 typical configuration utilizes no execute on the syslog moun
-3. Enable the EPEL repository for RHEL/CENTOS as the source for syslog-ng installation
+3. Note 1 typical configuration utilize noatime on both mounts
+4. Note 2 typical configuration utilizes no execute on the syslog moun
+5. Enable the EPEL repository for RHEL/CENTOS as the source for syslog-ng installation
 
 ```bash
   yum -y install epel-release
@@ -65,19 +62,19 @@ The following procedure will be utilized to prepare the syslog-ng servers
   yum -y update
   reboot
 ```
-  
+
 4. Install the syslog-ng software
 
 ```bash
   yum y install syslog-ng
 ```
-  
+
 5. Replace /etc/syslog-ng/syslog-ng.conf
 
 ```text
   @version:3.5
   @include "scl.conf"
-  
+
 # syslog-ng configuration file
 
 #
@@ -87,11 +84,11 @@ The following procedure will be utilized to prepare the syslog-ng servers
 # We utilize syslog-ng on Centos to allow syslog ingestion without
 
 # interaction with the OS
-  
+
 # Note: it also sources additional configuration files (*.conf)
 
 # located in /etc/syslog-ng/conf.d/
-  
+
   options {
       flush_lines (0);
       time_reopen (10);
@@ -102,36 +99,36 @@ The following procedure will be utilized to prepare the syslog-ng servers
       create_dirs (no);
       keep_hostname (yes);
   };
-  
+
 # Source additional configuration files (.conf extension only)
 
   @include "/etc/syslog-ng/conf.d/*.conf"
 
 ```
-  
-6. Create the following directories for modular configuration of syslog-ng  
+
+6. Create the following directories for modular configuration of syslog-ng
 
 ```bash
   mkdir -p /etc/syslog-ng/conf.d/splunk-0-source
-  mkdir -p /etc/syslog-ng/conf.d/splunk-1-dest  
-  mkdir -p /etc/syslog-ng/conf.d/splunk-2-filter  
-  mkdir -p /etc/syslog-ng/conf.d/splunk-3-log  
+  mkdir -p /etc/syslog-ng/conf.d/splunk-1-dest
+  mkdir -p /etc/syslog-ng/conf.d/splunk-2-filter
+  mkdir -p /etc/syslog-ng/conf.d/splunk-3-log
   mkdir -p /etc/syslog-ng/conf.d/splunk-4-simple
 ```
-  
-7. Create the Splunk master syslog-configuration /etc/syslog-ng/conf.d/splunk.conf  
+
+7. Create the Splunk master syslog-configuration /etc/syslog-ng/conf.d/splunk.conf
 
 ```bash
   ################################################################################
   # SecKit syslog template based on the work of Vladimir
   # Template from https://github.com/hire-vladimir/SA-syslog_collection/
   ################################################################################
-  
+
   ################################################################################
   #### Global config ####
   options {
     create-dirs(yes);
-  
+
     # Specific file/directory permissions can be set
     # this is particularly needed, if Splunk UF is running as non-root
     owner("splunk");
@@ -140,20 +137,20 @@ The following procedure will be utilized to prepare the syslog-ng servers
     dir-group("splunk");
     dir-perm(0755);
     perm(0755);
-  
+
     time-reopen(10);
     keep-hostname(yes);
     log-msg-size(65536);
   };
-  
+
   @include "/etc/syslog-ng/conf.d/splunk-0-source/*.conf"
   @include "/etc/syslog-ng/conf.d/splunk-1-dest/*.conf"
   @include "/etc/syslog-ng/conf.d/splunk-2-filter/*.conf"
   @include "/etc/syslog-ng/conf.d/splunk-3-log/*.conf"
   @include "/etc/syslog-ng/conf.d/splunk-4-simple/*.conf"
-  ```
-  
-8. Create the catch all syslog collection source. /etc/syslog-ng/conf.d/splunk-4-simple/8100-default.conf  
+```
+
+8. Create the catch all syslog collection source. /etc/syslog-ng/conf.d/splunk-4-simple/8100-default.conf
 
 ```text
   ################################################################################
@@ -163,13 +160,13 @@ The following procedure will be utilized to prepare the syslog-ng servers
       udp(port(8100));
       tcp(port(8100));
   };
-  
+
 #### Log remote sources classification ####
 
   destination d_default_syslog {
           file("/var/splunk-syslog/default/$HOST.log");
   };
-  
+
 # catch all, all data that did not meet above criteria will end up here
 
   log {
@@ -179,20 +176,20 @@ The following procedure will be utilized to prepare the syslog-ng servers
   };
 
 ```
-  
-9. Ensure splunk can read from the syslog folders. The paths should exist at this point due to the dedicated mount  
+
+9. Ensure splunk can read from the syslog folders. The paths should exist at this point due to the dedicated mount
 
 ```bash
   chown -R splunk:splunk /var/splunk-syslog
   chmod -R 0755 /var/splunk-syslog
 ```
 
-10. Verify syslog-ng configuration no errors should be reported (no output)  
+10. Verify syslog-ng configuration no errors should be reported (no output)
 
 ```bash
   syslog-ng -s
 ```
-  
+
 11. Update the systemd servics configuration to correctly support both rsyslog and syslog-ng edit /lib/systemd/system/syslog-ng.service
 
 ```bash
@@ -201,8 +198,8 @@ The following procedure will be utilized to prepare the syslog-ng servers
   replace:
   ExecStart=/usr/sbin/syslog-ng -F -p /var/run/syslogd-ng.pid
 ```
-  
-12. Create log rotation configuration /etc/logrotate.d/splunk-syslog  
+
+12. Create log rotation configuration /etc/logrotate.d/splunk-syslog
 
 ```text
   /var/splunk-syslog/*/*.log
@@ -220,9 +217,9 @@ The following procedure will be utilized to prepare the syslog-ng servers
       /bin/kill -HUP `cat /var/run/syslogd-ng.pid 2> /dev/null` 2> /dev/null || true
       endscript
   }
-  ```
-  
-13. Resolve SELinux blocked actions  
+```
+
+13. Resolve SELinux blocked actions
 
 ```bash
   semanage port -a -t syslogd_port_t -p tcp 8100
@@ -237,25 +234,24 @@ The following procedure will be utilized to prepare the syslog-ng servers
   #verify the file does not contain anything no related to syslog
   vim syslog-ng-modified.te
   semodule -i syslog-ng-modified.pp
-  ```
-  
-14. Allow firewall access to the new ports  
+```
+
+14. Allow firewall access to the new ports
 
 ```bash
   firewall-cmd --permanent --zone=public --add-port=8100/tcp
   firewall-cmd --permanent --zone=public --add-port=8100/udp
   firewall-cmd --reload
-  ```
-  
-15. Enable and start syslog-ng  
+```
+
+15. Enable and start syslog-ng
 
 ```bash
   systemctl enable syslog-ng
   systemctl start syslog-ng
-  ```
-  
-Solution Prepare KEMP Loadbalancer
-----------------------------------
+```
+
+## Solution Prepare KEMP Loadbalancer
 
 - Deploy virtual load balancer to hypervisor with two virtual interfaces
   - \#1 Enterprise LAN
@@ -279,9 +275,7 @@ Solution Prepare KEMP Loadbalancer
     - set persistence time 6 min
     - set scheduling method lest connected
     - Use Server Address for NAT
-    - Click Add new real server
-            - Enter IP of syslog server 1
-            - Enter port 8100
+    - Click Add new real server - Enter IP of syslog server 1 - Enter port 8100
 - Add the first virtual server (tcp)
   - Navigate to Virtual Services –&gt; Add New
   - set the virtual address
@@ -294,18 +288,14 @@ Solution Prepare KEMP Loadbalancer
     - Transparency
     - set scheduling method lest connected
     - TCP Connection only check port 8100
-    - Click Add new real server
-            - Enter IP of syslog server 1
-            - Enter port 8100
+    - Click Add new real server - Enter IP of syslog server 1 - Enter port 8100
 - Repeat the add virtual server process for additional resource servers
 
-Update syslog server routing configuration
-------------------------------------------
+## Update syslog server routing configuration
 
 Update the default gateway of the syslog servers to utilize the NLB internal interface
 
-Validation procedure
---------------------
+## Validation procedure
 
 ```
 #from a linux host utilize the following commands to validate the NLB and log servers are working together
@@ -314,11 +304,10 @@ logger -P 514 -d -n <vip_ip> "test UDP"
 verify the messages are logged in /var/splunk-syslog/default
 ```
 
-Prepare Splunk Infrastructure for syslog
-----------------------------------------
+## Prepare Splunk Infrastructure for syslog
 
 - Follow procedure for deployment of the Universal Forwarder with deployment client ensure the client has has valid outputs and base configuration
-- Create the indexes syslog and syslog\_unclassified
+- Create the indexes syslog and syslog_unclassified
 - Deploy input configuration for the default input
 
 ```

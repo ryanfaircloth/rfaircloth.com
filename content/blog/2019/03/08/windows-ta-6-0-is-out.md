@@ -1,17 +1,18 @@
 ---
-title: 'Windows TA 6.0 is out!'
-date: '2019-03-08T10:08:16-05:00'
+title: "Windows TA 6.0 is out!"
+date: "2019-03-08T10:08:16-05:00"
 status: publish
 permalink: /2019/03/08/windows-ta-6-0-is-out
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 628
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 Splunk released a major update to the [Splunk TA for Windows](https://splunkbase.splunk.com/app/742/) last month you may not have noticed but I think you should take a closer look. A few key things
 
 - Simplified deployment for new customers Splunk merged the TA for Microsoft DNS and TA for Microsoft AD
@@ -22,8 +23,7 @@ Splunk released a major update to the [Splunk TA for Windows](https://splunkbase
 
 If you are a SecKit for Windows user it is safe to upgrade just follow Splunk’s upgrade instructions. Need some guidance on good practices for Windows data on-boarding to Splunk be sure to checkout [SecKit](https://seckit.readthedocs.io/projects/seckit-ta/en/latest/index.html)
 
-But Change!
------------
+## But Change!
 
 While this is not a replacement for the upgrade notes you are probably wondering how will this impact my users.
 

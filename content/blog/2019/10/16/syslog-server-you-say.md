@@ -1,20 +1,21 @@
 ---
-title: 'Syslog server you say'
-date: '2019-10-16T18:23:00-05:00'
+title: "Syslog server you say"
+date: "2019-10-16T18:23:00-05:00"
 status: publish
 permalink: /2019/10/16/syslog-server-you-say
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 710
 category:
-    - Uncategorized
+  - Uncategorized
 tag:
-    - Splunk
-    - syslog
-    - syslog-ng
+  - Splunk
+  - syslog
+  - syslog-ng
 post_format: []
 ---
+
 I’ve had quite a bit to say about syslog as a component of a streaming data architecture primarily feeding Splunk Enterprise (or Enterprise Cloud). In seven days I will be presenting the culmination of small developments that have taken shape into the brand new Splunk Connect for Syslog (SC4S).
 
 You don’t have to wait swing over via Splunk Base <https://splunkbase.splunk.com/app/4740/#/details>

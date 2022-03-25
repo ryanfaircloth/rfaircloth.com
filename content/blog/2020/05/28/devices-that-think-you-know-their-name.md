@@ -1,17 +1,18 @@
 ---
-title: 'Devices that think you know their name'
-date: '2020-05-28T14:46:48-05:00'
+title: "Devices that think you know their name"
+date: "2020-05-28T14:46:48-05:00"
 status: publish
 permalink: /2020/05/28/devices-that-think-you-know-their-name
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 792
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 <figure class="wp-block-gallery columns-1 is-cropped">- <figure>![](https://i0.wp.com/www.rfaircloth.com/wp-content/uploads/2020/05/507.jpg?resize=621%2C691&ssl=1)</figure>
 
 </figure>What exactly is that talkers name is one of the most frustrating problems in syslog eventing and the most frustrating in analytics. For far too long the choices have been to use the devices name OR use reverse DNS but never both. Today SC4S 1.20.0 solves this problem by doing what you would do!

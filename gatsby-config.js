@@ -3,12 +3,12 @@ module.exports = {
     title: `rfaircloth data nerd`,
     author: {
       name: `Ryan Faircloth`,
-      summary: `who lives and works in remote from Sunny Floridya trying to share useful things.`,
+      summary: `who lives and works in remote from Sunny Florida trying to share useful things.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
     siteUrl: `https://rfaircloth.com/`,
     social: {
-      twitter: `kylemathews`,
+      github: `rfaircloth-splunk`,
     },
   },
   plugins: [

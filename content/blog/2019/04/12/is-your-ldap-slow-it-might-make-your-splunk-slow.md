@@ -1,17 +1,18 @@
 ---
-title: 'Is your LDAP Slow? It might make your Splunk Slow'
-date: '2019-04-12T10:04:00-05:00'
+title: "Is your LDAP Slow? It might make your Splunk Slow"
+date: "2019-04-12T10:04:00-05:00"
 status: publish
 permalink: /2019/04/12/is-your-ldap-slow-it-might-make-your-splunk-slow
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 650
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 I’ve had this crop up enough times, I think its worth a short post. Most Splunk deployments use local and/or LDAP authentication. LDAP configuration is something of a black art and often the minimal configuration that works is the first and last time this is considered. It is worth your time as an administrator to optimize your LDAP configuration or better yet move to the more secure and reliable SAML standard.
 
 Things to consider

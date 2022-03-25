@@ -1,31 +1,31 @@
 ---
-title: 'Using systemd to squash THP and start splunk enterprise'
-date: '2017-04-28T16:00:41-05:00'
+title: "Using systemd to squash THP and start splunk enterprise"
+date: "2017-04-28T16:00:41-05:00"
 status: publish
 permalink: /2017/04/28/using-systemd-squash-thp-start-splunk-enterprise
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 441
 category:
-    - Splunk
-    - Uncategorized
+  - Splunk
+  - Uncategorized
 tag:
-    - linux
-    - Splunk
-    - systemd
-    - THP
-    - ulimits
+  - linux
+  - Splunk
+  - systemd
+  - THP
+  - ulimits
 post_format: []
 ---
+
 Updated Jan, 16, 2018 user security issue
 
 Updated Jan 19,2018 using forking type for splunk
 
 Updated Oct 2019 for format issues after wordpress upgrade
 
-Fixing INIT Scripts
--------------------
+## Fixing INIT Scripts
 
 If you are currently or prefer using init script startup to remain as close to “out of box” configuration as possible be aware of a serious security risk present in the traditional startup method. REF: [https://www.splunk.com/view/SP-CAAAP3M ](https://www.splunk.com/view/SP-CAAAP3M)To mitigate the issue and address THP/Ulimits consider moving to a field modified version of the script. <https://bitbucket.org/snippets/rfaircloth-splunk/Gek8My>
 
@@ -46,8 +46,8 @@ Create the file `/etc/systemd/system/disable-transparent-huge-pages.service`
 
 \[Service\]  
 Type=oneshot  
-ExecStart=/bin/sh -c “echo never &gt;/sys/kernel/mm/transparent\_hugepage/enabled”  
-ExecStart=/bin/sh -c “echo never &gt;/sys/kernel/mm/transparent\_hugepage/defrag”  
+ExecStart=/bin/sh -c “echo never &gt;/sys/kernel/mm/transparent_hugepage/enabled”  
+ExecStart=/bin/sh -c “echo never &gt;/sys/kernel/mm/transparent_hugepage/defrag”  
 RemainAfterExit=true  
 \[Install\]  
 WantedBy=multi-user.target

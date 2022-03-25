@@ -1,17 +1,18 @@
 ---
-title: 'Dev Life: Splunk Add-ons like a developer'
-date: '2019-01-07T16:10:08-05:00'
+title: "Dev Life: Splunk Add-ons like a developer"
+date: "2019-01-07T16:10:08-05:00"
 status: publish
 permalink: /2019/01/07/dev-life-splunk-add-ons-like-a-developer
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 586
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 As a life long (seems that way) software developer come to Splunk I would like to have some of the properties of a Integrated Development Environment (IDE). This blog post walks you through setting up and experiencing my approach to development for Splunk I wrote a second post in this series creating an actual add-on for Splunk using this toolchain. <https://www.rfaircloth.com/2019/01/07/building-a-cef-source-add-on-for-splunk-enterprise/>
 
 - I can edit “code” i.e splunk conf in my editor and reload the code without restarting
@@ -22,8 +23,7 @@ As a life long (seems that way) software developer come to Splunk I would like t
 - I can leverage dependencies from other developed products.
 - Have ready access to common tools like add-on builder and eventgen
 
-Setting up the environment Mac OSX
-----------------------------------
+## Setting up the environment Mac OSX
 
 - Install [Brew](https://brew.sh/)
 - Install LibMagic “brew install libmagic”
@@ -39,12 +39,11 @@ Setting up the environment Mac OSX
 - Install [docker](https://docs.docker.com/docker-for-mac/install/)
 - Create the virtual env “virtualenv ~/venv/splservices”
 - Activate the new env “source ~/venv/splservices/bin/activate”
-- Install pip “sudo python easy\_install pip”
+- Install pip “sudo python easy_install pip”
 - Install our specific requirements “pip install -r https://bitbucket.org/SPLServices/addonbuildimage/raw/master/requirements.txt”
 - I personally prefer the [atom editor ](https://atom.io/)
 
-Setup the local project
------------------------
+## Setup the local project
 
 For demonstration purposes we are going to work with one of my recent add-ons for Splunk. A full tutorial on git is beyond the scope of this article we will simply clone the repo and start a feature branch.
 
@@ -54,25 +53,26 @@ For demonstration purposes we are going to work with one of my recent add-ons fo
 - Setup git flow “git flow init -d”
 - Start a new feature “git flow feature start myfeature”
 
-Package and Test
-----------------
+## Package and Test
 
 Before we change anything we should verify we can recreate a successful build.
 
 - Build a package “make package”
 - Verify the package builds the last line will report something like this, path and version will vary.
-- 
+-
 
-```
+````
 <pre class="wp-block-code">```
 slim package: [NOTE] Source package exported to "/Users/user/Downloads/ta-cef-for-splunk/out/packages/splunkbase/TA-cef-for-splunk-0.2.0-myfeature.1+17.tar.gz"
-```
+````
+
 ```
 
 - Test the package using Splunk’s appinspect “make package\_test”
 - Verify the test report shows one failure. While developing this one failure is expected which is the version number does not conform to release rules for Splunk Base. Note: per semver.org the feature branch version clearly indicates this is a development build this is helpful in preventing accidental “escapes” to production
 
 ```
+
 <pre class="wp-block-code">```
 splunk-appinspect inspect out/packages/splunkbase/TA-cef-for-splunk-0.2.0-myfeature.1+17.tar.gz --data-format junitxml --output-file test-reports/TA-cef-for-splunk.xml --excluded-tags manual
 Validating: TA-cef-for-splunk Version: 0.2.0-myfeature.1+17

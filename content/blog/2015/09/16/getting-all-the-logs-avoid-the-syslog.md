@@ -1,17 +1,18 @@
 ---
-title: 'Getting all the logs, avoid the syslog'
-date: '2015-09-16T22:07:07-05:00'
+title: "Getting all the logs, avoid the syslog"
+date: "2015-09-16T22:07:07-05:00"
 status: publish
 permalink: /2015/09/16/getting-all-the-logs-avoid-the-syslog
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 124
 category:
-    - Splunk
+  - Splunk
 tag: []
 post_format: []
 ---
+
 Big data, open world a utopia we may one day have. Today I want my logs all of my logs, and then I want more. I often want to collect additional data such as:
 
 - Performance counters on Windows operating systems

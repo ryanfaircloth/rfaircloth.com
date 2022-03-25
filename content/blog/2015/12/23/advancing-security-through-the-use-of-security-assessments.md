@@ -1,17 +1,18 @@
 ---
-title: 'Advancing security through the use of security assessments'
-date: '2015-12-23T13:15:28-05:00'
+title: "Advancing security through the use of security assessments"
+date: "2015-12-23T13:15:28-05:00"
 status: publish
 permalink: /2015/12/23/advancing-security-through-the-use-of-security-assessments
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 154
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 Long ago our in the distant past that is the late 1970s individuals were alone and unconnected. Visionaries of the future began to connect the individuals in communities. These communities were open and without borders, individuals could enter and use all dwellings with ease. The community thrived with each individual adding unique value.
 
 ![](https://i0.wp.com/cdn.quotesgram.com/img/82/91/1736830500-security-chain-fence-funny-demotivational-posters-1296250082.jpg?resize=640%2C512)  

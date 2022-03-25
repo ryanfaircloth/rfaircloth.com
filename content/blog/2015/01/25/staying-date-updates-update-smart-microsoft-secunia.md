@@ -1,18 +1,19 @@
 ---
-title: 'Staying up to date with the updates, update smart with Microsoft and Secunia'
-date: '2015-01-25T17:41:29-05:00'
+title: "Staying up to date with the updates, update smart with Microsoft and Secunia"
+date: "2015-01-25T17:41:29-05:00"
 status: publish
 permalink: /2015/01/25/staying-date-updates-update-smart-microsoft-secunia
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 72
 category:
-    - 'Personal Security'
-    - Security
+  - "Personal Security"
+  - Security
 tag: []
 post_format: []
 ---
+
 Its been a busy year already Oracle’s Java, Adobe’s Flash, and so many Updates to Windows. Most users by how have heard they should keep their Windows PCs up to date to avoid infection. Unfortunately, our adversaries have heard the same speech and are trying to deceive through fake updates for your computer. First reliable companies will not notify you by email, instant message, or advertisement that your computer is out of date and needs an update. You may see email or advertisements for new versions or upgrades, and subscription renewals. Some leading software companies are helping us stay secure through automatic or seamless updates such as Google’s Chrome browser, the FireFox Browser, and Adobe’s Flash. Security updates for these productions will simply install in the backgroud without needing your help. You can keep yourself safer by taking a few steps to secure your computer.
 
 **Lets take care of our operating system first.**

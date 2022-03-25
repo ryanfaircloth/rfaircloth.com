@@ -1,29 +1,30 @@
 ---
-title: 'You don&#8217;t have enough fingers'
-date: '2021-02-21T09:39:36-05:00'
+title: "You don't have enough fingers"
+date: "2021-02-21T09:39:36-05:00"
 status: publish
 permalink: /2021/02/21/you-dont-have-enough-fingers
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 855
 category:
-    - Uncategorized
+  - Uncategorized
 tag:
-    - compliance
-    - logs
-    - security
-    - 'sensitive data'
+  - compliance
+  - logs
+  - security
+  - "sensitive data"
 post_format: []
 spay_email:
-    - ''
+  - ""
 ---
+
 <figure class="wp-block-gallery columns-1 is-cropped">- <figure>![](https://i0.wp.com/www.rfaircloth.com/wp-content/uploads/2021/02/2fnkx4.jpg?resize=666%2C500&ssl=1)</figure>
 
 </figure>As you may have guessed I have been spending a substantial amount of time working with infrastructure log sources. I’ve recently had time to start addressing practice and theory of application level log sources and the substantial risks developers are taking without the awareness of their organization into those risks. The conversation starts like this.
 
 > I have sensitive data in my logs and I need to filter that out
-> 
+>
 > <cite>Security teams world wide</cite>
 
 Filtering out sensitive data sounds like a good idea right. No its not right, its wrong and this is why.
@@ -34,7 +35,7 @@ Filtering out sensitive data sounds like a good idea right. No its not right, it
 - This is a well known vulnerability that must be addressed.
 
 > But defense in depth I want to filter out just in case
-> 
+>
 > <cite>Security teams world wide</cite>
 
 This just in case approach is the deployment of untested code to production which is both an operational and security risk. Why is it untested glad you ask, because you don’t know your input you can’t test the behavior and unintended consequences to performance and integrity are possible.
@@ -51,14 +52,15 @@ Joe Crobak writes [Seven Best Practices for Keeping Sensitive Data Out of Logs](
 
 I want to focus on #6 automated QA. Joe mentioned the concept but didn’t elaborate on what that may mean. I will provide an example, using [BDD](https://pypi.org/project/pytest-bdd/) testing as an example.
 
-```
+````
 <pre class="wp-block-code">```
     Scenario Outline: <action> fruits
         Given there are <start> <fruits>
         When <user> eat <action> <fruits>
         Then <user> should have <left> <fruits>
         Then <user> and <action> or <fruits> combination should not be logged
-```
+````
+
 ```
 
 An individuals fruit preference can the action of the individual can be presumed to be private matters that should not be available in logs.
@@ -66,12 +68,13 @@ An individuals fruit preference can the action of the individual can be presumed
 When developing our test parser we will provide an additional test
 
 ```
+
 <pre class="wp-block-code">```
 @then("<user> and <action> or <fruits> combination should not be logged")
 def should_have_left_cucumbers(user, eat, fruits):
 # The user itself should be logged
     assert splunk.search(f"| search index="something" term(\"{user}\") > 0
-#the users action and preference should not be
+# the users action and preference should not be
     assert splunk.search(f"| search index="something" term(\"{user}\") AND term(\"{action}\") == 0
 assert splunk.search(f"| search index="something" term(\"{user}\") AND term(\"{fruits}\") == 0
 ```

@@ -1,17 +1,18 @@
 ---
-title: 'Building a Splunk CIM compatible source addon'
-date: '2019-01-08T13:03:20-05:00'
+title: "Building a Splunk CIM compatible source addon"
+date: "2019-01-08T13:03:20-05:00"
 status: publish
 permalink: /2019/01/08/building-a-splunk-cim-compatible-source-addon
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 591
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 This walk through will build a Splunk CIM compatible source addon extending the CEF source type from my CEF framework TA. This is part three in a three part Series
 
 Before you start, I will have to gloss over many topics you should have:
@@ -29,54 +30,49 @@ In the prior two articles we create a project style development environment for 
 Considering this we will use the “web” model as our basis and add a number of connivence elements for our users. The following table illustrates how we will map our data.
 
 The implementation of the mapping is explained in the following table our implementation of the mapping can be viewed in [bitbucket](https://bitbucket.org/SPLServices/ta-cef-imperva-incapsula/src/master/src/TA-cef-imperva-incapsula-for-splunk/). Review default/props.conf default/transforms.conf and the lookups present in lookups/
-| CEF Field                | Splunk Field                        | Notes                                                                                                                                     |
+| CEF Field | Splunk Field | Notes |
 |--------------------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| sip                      | dest\_ip                            | Not a CIM field in the web model used by convention.  
-Not present in sample not validated                                                |
-| spt                      | dest\_port                          | Not a CIM field in the web model used by convention.  
-Not present in sample not validated                                                |
-| qstr                     | uri\_query                          | The formatting of this field contains escaped equal (=) signs and is omitting the leading question mark (?) used a complex eval to adjust |
-| cs9                      | Rule\_Name AND signature            | Not a CIM field however Rule\_Name is similar to an attack signature. Use an eval to split by comma and remove empties                    |
-| Attack Severity          | CEF\_severity  
-severity            | This field requires a lookup to set severity as one of low,medium,high,critical created “imperva\_incapsula\_severity.csv                 |
-| requestmethod            | http\_method                        |
-| ref                      | http\_referrer                      |
-| requestClientApplication | http\_user\_agent                   |
-| dest                     | site                                |
-| src\_user\_id            | user                                |
-| action                   | act                                 | This field requires a lookup to translate act to action which can be allowed or blocked                                                   |
-| vendor\_product          | Constant string “Imperva Incapsula” |
-| app                      | vendor\_app                         | saved for user search not used in the CIM model                                                                                           |
-| app                      | Constant String “incapsula”         |
-| act                      | cached                              | Some values of act can indicate cached which is set to true using the actions lookup above                                                |
+| sip | dest_ip | Not a CIM field in the web model used by convention.  
+Not present in sample not validated |
+| spt | dest_port | Not a CIM field in the web model used by convention.  
+Not present in sample not validated |
+| qstr | uri_query | The formatting of this field contains escaped equal (=) signs and is omitting the leading question mark (?) used a complex eval to adjust |
+| cs9 | Rule_Name AND signature | Not a CIM field however Rule_Name is similar to an attack signature. Use an eval to split by comma and remove empties |
+| Attack Severity | CEF_severity  
+severity | This field requires a lookup to set severity as one of low,medium,high,critical created “imperva_incapsula_severity.csv |
+| requestmethod | http_method |
+| ref | http_referrer |
+| requestClientApplication | http_user_agent |
+| dest | site |
+| src_user_id | user |
+| action | act | This field requires a lookup to translate act to action which can be allowed or blocked |
+| vendor_product | Constant string “Imperva Incapsula” |
+| app | vendor_app | saved for user search not used in the CIM model |
+| app | Constant String “incapsula” |
+| act | cached | Some values of act can indicate cached which is set to true using the actions lookup above |
 
-
-Creating Eventtypes
--------------------
+## Creating Eventtypes
 
 Fields alone are not enough to include an event in a datamodel. In-fact incorrect configuration of eventtypes and tags and include data which is invalid for a model compromising the usefulness of a model.
 
 We will create two eventtypes for this data, our implementation can be viewed in eventype.conf using the bitbucket link above:
 
-| eventtype                       | description                                                    |
-|---------------------------------|----------------------------------------------------------------|
-| imperva\_incapsula\_web         | All events matching our source and sourcetype                  |
-| imperva\_incapsula\_web\_attack | All eventtypes imperva\_incapsula\_web with a signature field. |
+| eventtype                    | description                                                  |
+| ---------------------------- | ------------------------------------------------------------ |
+| imperva_incapsula_web        | All events matching our source and sourcetype                |
+| imperva_incapsula_web_attack | All eventtypes imperva_incapsula_web with a signature field. |
 
-
-Creating Tags
--------------
+## Creating Tags
 
 The final step to include events in a data model is to tag the events. Additional tags can be created in this case “attack” make sense for the subset of events that indicate a detection by the Incapsula WAF service. Tags which are not used by the data model are not included by default and are only available to the users in search activities.
 
-| tag    | description                               |
-|--------|-------------------------------------------|
-| web    | eventtype=imperva\_incapsula\_web         |
-| attack | eventtype=imperva\_incapsula\_web\_attack |
+| tag    | description                            |
+| ------ | -------------------------------------- |
+| web    | eventtype=imperva_incapsula_web        |
+| attack | eventtype=imperva_incapsula_web_attack |
 
-Testing our work
-----------------
+## Testing our work
 
-Using “make package\_test” ensure no unexpected errors or warnings are produced.
+Using “make package_test” ensure no unexpected errors or warnings are produced.
 
-Using our development environment and EventGen via “make docker\_dev” we can interactively validate our mapping is CIM compliant.
+Using our development environment and EventGen via “make docker_dev” we can interactively validate our mapping is CIM compliant.

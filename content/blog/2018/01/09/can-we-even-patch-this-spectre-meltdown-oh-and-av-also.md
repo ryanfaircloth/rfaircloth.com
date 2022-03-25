@@ -1,17 +1,18 @@
 ---
-title: 'Can we even patch this Spectre/Meltdown oh and AV also'
-date: '2018-01-09T11:04:38-05:00'
+title: "Can we even patch this Spectre/Meltdown oh and AV also"
+date: "2018-01-09T11:04:38-05:00"
 status: publish
 permalink: /2018/01/09/can-we-even-patch-this-spectre-meltdown-oh-and-av-also
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 490
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 Isn’t it great when things are in meltdown and you can’t patch yet because your waiting on another patch?
 
 Microsoft has stated you can’t patch until AV goes first

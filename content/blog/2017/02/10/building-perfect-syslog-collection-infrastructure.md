@@ -1,23 +1,24 @@
 ---
-title: 'Building a more perfect Syslog Collection Infrastructure'
-date: '2017-02-10T10:48:20-05:00'
+title: "Building a more perfect Syslog Collection Infrastructure"
+date: "2017-02-10T10:48:20-05:00"
 status: publish
 permalink: /2017/02/10/building-perfect-syslog-collection-infrastructure
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 389
 thumbnail: ../../../../uploads/2017/02/syslog.png
 category:
-    - Splunk
-    - Uncategorized
+  - Splunk
+  - Uncategorized
 tag:
-    - EventOPS
-    - HEC
-    - RSYSLOG
-    - Splunk
+  - EventOPS
+  - HEC
+  - RSYSLOG
+  - Splunk
 post_format: []
 ---
+
 A little while back I created a bit of [code](http://www.rfaircloth.com/2016/05/16/building-high-performance-low-latency-rsyslog-splunk/) to help get data from linux systems in real time where the Splunk Universal Forwarder could not be installed. At the time we had a few limitations the biggest problem being time stamps were never parsed only “current” time on the indexer could be used. Want to try out version 2 lets get started! First let me explain what we are doing
 
 If you manage a Splunk environment with high rate sources such as a Palo Alto firewall or Web Proxy you will notice that events are not evenly distributed over the indexers because the the data is not evenly balanced across your aggregation tier. The reasons for this are boiled down to “time based load balancing” in Larger environments the universal forwarder may not be able to split by time to distribute a high load. So what is an admin to do? Lets look for a connection load balancing solution. We need to find a way to switch from “SYSLOG” to HTTP(s) so we can utilize a proper load balancer. How will we do this?
@@ -40,16 +41,15 @@ Basic Setup
 1. Follow docs, to setup HTTP event collector on your indexers, note if your indexers are clustered docs does not cover this, you must create the configuration manually be sure to generate a unique GUID manually. Clusters environments can use the sample configuration below:
 2. Follow documentation for your load balancer of choice to create a http VIP with https back end servers. HEC listens on 8088 by default
 3. Grab the code and configuration examples from [bitbucket](https://bitbucket.org/rfaircloth-splunk/rsyslog-omsplunk/src)
-  1. Deploy the script [omsplunkhec.py](https://bitbucket.org/rfaircloth-splunk/rsyslog-omsplunk/src/445676ad128d8ca5de3b573c55450ecc13b3dd88/omsplunkhec.py?at=master "omsplunkhec.py") to /opt/rsyslog/ ensure the script is executable
-  2. Review [rsyslogd.d.conf.example](https://bitbucket.org/rfaircloth-splunk/rsyslog-omsplunk/src/445676ad128d8ca5de3b573c55450ecc13b3dd88/rsyslogd.d.conf.example?at=master "rsyslogd.d.conf.example") and your configuration in /etc/rsyslog.d/00-splunkhec.conf replace the GUID and IP with your correct values
-  3. Restart rsyslog
+4. Deploy the script [omsplunkhec.py](https://bitbucket.org/rfaircloth-splunk/rsyslog-omsplunk/src/445676ad128d8ca5de3b573c55450ecc13b3dd88/omsplunkhec.py?at=master "omsplunkhec.py") to /opt/rsyslog/ ensure the script is executable
+5. Review [rsyslogd.d.conf.example](https://bitbucket.org/rfaircloth-splunk/rsyslog-omsplunk/src/445676ad128d8ca5de3b573c55450ecc13b3dd88/rsyslogd.d.conf.example?at=master "rsyslogd.d.conf.example") and your configuration in /etc/rsyslog.d/00-splunkhec.conf replace the GUID and IP with your correct values
+6. Restart rsyslog
 
 What to expect, My hope data balance Zen.
 
 [![](https://i0.wp.com/www.rfaircloth.com/wp-content/uploads/2017/02/chart.png?resize=1100%2C243)](https://i0.wp.com/www.rfaircloth.com/wp-content/uploads/2017/02/chart.png)
 
-HTTP Event Collector inputs.conf example deployed via master-apps
------------------------------------------------------------------
+## HTTP Event Collector inputs.conf example deployed via master-apps
 
 > ```
 > <pre class="p1"><span class="s1">[http] </span>
@@ -63,8 +63,7 @@ HTTP Event Collector inputs.conf example deployed via master-apps
 > <span class="s1">indexes=main,summary</span>
 > ```
 
-Example /etc/rsyslog.d/00-splunk.conf
--------------------------------------
+## Example /etc/rsyslog.d/00-splunk.conf
 
 This example will listen on 514 TCP and UDP sending events via http, be sure to replace the GUID and ip address
 
@@ -76,16 +75,15 @@ input(type="imptcp" port="514" ruleset="default_file")
 module(load="omprog")
 
 ruleset(name="default_file"){
-    $RulesetCreateMainQueue    
+    $RulesetCreateMainQueue
     action(type="omprog"
-       binary="/opt/rsyslog/omsplunkhec.py DAA61EE1-F8B2-4DB1-9159-6D7AA5220B21 192.168.100.70 --sourcetype=syslog --index=main" 
+       binary="/opt/rsyslog/omsplunkhec.py DAA61EE1-F8B2-4DB1-9159-6D7AA5220B21 192.168.100.70 --sourcetype=syslog --index=main"
        template="RSYSLOG_TraditionalFileFormat")
     stop
 }
 ```
 
-Example HAProxy Configuration 1.7 /etc/haproxy/haproxy.cfg
-----------------------------------------------------------
+## Example HAProxy Configuration 1.7 /etc/haproxy/haproxy.cfg
 
 > ```
 > <pre class="p1"><span class="s1">global</span>

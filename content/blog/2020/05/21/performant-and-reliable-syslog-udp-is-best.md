@@ -1,17 +1,18 @@
 ---
-title: 'Performant AND Reliable Syslog UDP is best'
-date: '2020-05-21T15:51:21-05:00'
+title: "Performant AND Reliable Syslog UDP is best"
+date: "2020-05-21T15:51:21-05:00"
 status: publish
 permalink: /2020/05/21/performant-and-reliable-syslog-udp-is-best
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 782
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 The faces I’ve seen made to this statement say a lot. I hope you read past the statement for my reasons and when other requirements may prompt another choice.
 
 <div class="wp-container-623bb344cf022 wp-block-group"><div class="wp-block-group__inner-container"><figure class="wp-block-image size-large">![](https://i0.wp.com/www.rfaircloth.com/wp-content/uploads/2020/05/42cx56.jpg?resize=577%2C432&ssl=1)</figure></div></div>Wait you say TCP uses ACKS so data won’t be lost, yes that’s true but there are buts
@@ -47,7 +48,7 @@ Wait you ask how do I mitigate down time for Syslog?
 
 A few other idea’s you may have to bring “HA” to syslog that will be counter productive
 
-- DNS – 
+- DNS –
   - Most known Syslog sources will only use 1 typically the first or one random IP from a list of A records for a very long period of time ignoring the TTL. Using DNS to change the target is likely to not work in a short enough period of time in some cases hours
   - DNS Global Load Balancer similar to the above clients often holds cached results for far longer than TTL. In addition, the actual device configuration does not use the correct DNS servers for GLB to properly detect distance and will route incorrectly
 - AnyCast

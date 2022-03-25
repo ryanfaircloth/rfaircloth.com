@@ -1,17 +1,18 @@
 ---
-title: 'Another reason you want agents'
-date: '2021-10-14T12:28:26-05:00'
+title: "Another reason you want agents"
+date: "2021-10-14T12:28:26-05:00"
 status: publish
 permalink: /2021/10/14/another-reason-you-want-agents
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 890
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 Microsoft has released a cool new tool for Linux ported from Windows. I was asked today why I don’t think “syslog” is an acceptable way to bring large events into the SIEM (Splunk of course). It took about 60s to wrap up the conversation the original asker of the question was able to validate my concerns pretty quickly sadly many times expectations and requirements for open or no agents get set before the “problem we are trying to solve” or “use case is defined.
 
 When I first said no the immediate response was “yes it works fine”. This is the “it works on my machine problem.

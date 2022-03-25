@@ -1,17 +1,18 @@
 ---
-title: 'When I say syslog what I really mean is'
-date: '2020-09-23T14:24:57-05:00'
+title: "When I say syslog what I really mean is"
+date: "2020-09-23T14:24:57-05:00"
 status: publish
 permalink: /2020/09/23/when-i-say-syslog-what-i-really-mean-is
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 826
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 Syslog is a ambiguous term so I thought I would clarify what I am talking about
 
 syslog is a daemon where Linux/UNIX sent logs back in the day. This in most cases results in an entry in a file in /var/log that may or may not have any particular structure this is normally not what I am talking about

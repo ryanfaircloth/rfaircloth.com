@@ -1,17 +1,18 @@
 ---
-title: 'Mitigating the impact of sources that have lost their place in time'
-date: '2022-02-14T11:56:05-05:00'
+title: "Mitigating the impact of sources that have lost their place in time"
+date: "2022-02-14T11:56:05-05:00"
 status: publish
 permalink: /2022/02/14/mitigating-the-impact-of-sources-that-have-lost-their-place-in-time
 author: ryan@dss-i.com
-excerpt: ''
+excerpt: ""
 type: post
 id: 918
 category:
-    - Uncategorized
+  - Uncategorized
 tag: []
 post_format: []
 ---
+
 There are certain things in machine data that can not be forgiven.
 
 - Correct identification of time in UTC (time offsets are fine)
@@ -23,7 +24,7 @@ Getting these values wrong can prevent events from being found at all. Events wi
 
 Some Splunky things you should do now to improve performance and usability
 
-```
+````
 <pre class="wp-block-code">```
 #indxes.conf
 [default]
@@ -46,16 +47,18 @@ tsidxWritingLevel = 4
 # props.conf
 [default]
 # this change will potentially "break differenly" some improperly onboarded log sources.
-# When no configuration is provided Splunk will try to guess how to break events this 
-# requires holding data in memory as the Splunk indexer deployment scales to more indexers 
-# this can be increasingly painful its better to turn it off which will result in 
+# When no configuration is provided Splunk will try to guess how to break events this
+# requires holding data in memory as the Splunk indexer deployment scales to more indexers
+# this can be increasingly painful its better to turn it off which will result in
 # single line events and configure sourcetypes properly as needed
 SHOULD_LINEMERGE = false
 # related to <meta charset="utf-8"></meta>quarantinePastSecs in indexes.conf this setting mitigates the impact of bad dates but must be set per source/sourcetype for the exception cases where this is valid
 MAX_DAYS_AGO = 1
 MAX_DAYS_HENCE = 1
 
-```
+````
+
 ```
 
 The benefit of the application of these settings is a mitigation of the impact of badly setup data. While data will continue to have reduced value the impact will be short-lived and will dissipate rapidly as individual sources are corrected.
+```
