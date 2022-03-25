@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `rfaircloth data nerd`,
+    title: `RFaircloth Data Nerd`,
     author: {
       name: `Ryan Faircloth`,
       summary: `who lives and works in remote from Sunny Florida trying to share useful things.`,
@@ -9,6 +9,8 @@ module.exports = {
     siteUrl: `https://rfaircloth.com/`,
     social: {
       github: `rfaircloth-splunk`,
+      linkedin: `ryanfaircloth`,
+      twitter: `rfairclothDN`,
     },
   },
   plugins: [

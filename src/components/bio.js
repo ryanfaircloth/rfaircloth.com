@@ -36,7 +36,7 @@ const Bio = () => {
         className="bio-avatar"
         layout="fixed"
         formats={["auto", "webp", "avif"]}
-        src="../images/profile-pic.png"
+        src="../images/me.jpg"
         width={50}
         height={50}
         quality={95}
@@ -46,9 +46,9 @@ const Bio = () => {
         <p>
           Written by <strong>{author.name}</strong> {author?.summary || null}
           {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
+          You should follow him on <a href={`https://github.com/${social?.github || ``}`}>Github</a>
+          , <a href={`https://www.linkedin.com/in/${social?.linkedin || ``}`}>Linkedin</a>
+          , or <a href={`https://www.twitter.com/${social?.twitter || ``}`}>Twitter</a>
         </p>
       )}
     </div>
