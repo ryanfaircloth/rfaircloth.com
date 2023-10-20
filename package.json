@@ -12,7 +12,7 @@
     "gatsby-plugin-canonical-urls": "^4.10.0",
     "gatsby-plugin-feed": "^4.10.2",
     "gatsby-plugin-google-gtag": "^4.10.0",
-    "gatsby-plugin-image": "^2.10.1",
+    "gatsby-plugin-image": "^3.12.2",
     "gatsby-plugin-manifest": "^4.10.2",
     "gatsby-plugin-meta-redirect": "^1.1.1",
     "gatsby-plugin-offline": "^5.10.2",
