@@ -1,8 +1,8 @@
-const siteAddress = new URL("https://www.example.com")
+const siteAddress = new URL("https://rfaircloth.com")
 
 module.exports = {
   siteMetadata: {
-    title: `RFaircloth Data Nerd`,
+    title: `Ryan Faircloth Data Nerd`,
     author: {
       name: `Ryan Faircloth`,
       summary: `who lives and works remotely from Sunny Florida trying to share useful things.`,
@@ -10,7 +10,7 @@ module.exports = {
     description: `My Blog about big data problems`,
     siteUrl: siteAddress.href.slice(0, -1),
     social: {
-      github: `rfaircloth-splunk`,
+      github: `ryanfaircloth`,
       linkedin: `ryanfaircloth`,
       twitter: `rfairclothDN`,
     },
@@ -106,25 +106,21 @@ module.exports = {
                 })
               })
             },
-            query: `
-              {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  nodes {
-                    excerpt
-                    html
-                    fields {
-                      slug
-                    }
-                    frontmatter {
-                      title
-                      date
-                    }
+            query: `{
+              allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
+                nodes {
+                  excerpt
+                  html
+                  fields {
+                    slug
+                  }
+                  frontmatter {
+                    title
+                    date
                   }
                 }
               }
-            `,
+            }`,
             output: "/rss.xml",
             title: "Gatsby Starter Blog RSS Feed",
           },
